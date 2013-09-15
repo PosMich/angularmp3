@@ -1,0 +1,102 @@
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html class="ie ie6 ie-lt10 ie-lt9 ie-lt8 ie-lt7 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 ie-lt10 ie-lt9 ie-lt8 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 ie-lt10 ie-lt9 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 ie-lt10 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"  ng-app="mp3Player"><!--<![endif]-->
+<!-- the "no-js" class is for Modernizr. -->
+
+<head data-template-set="html5-reset">
+
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>MP3 Player</title>
+
+    <meta name="title" content="MP3 Playa" />
+    <meta name="description" content="MP3 Playa" />
+    <meta name="author" content="Michael Poschacher" />
+
+    <!--  Mobile Viewport Fix
+    http://j.mp/mobileviewport & http://davidbcalhoun.com/2010/viewport-metatag
+    device-width : Occupy full width of the screen in its current orientation
+    initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+    maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
+    -->
+    <!-- Uncomment to use; use thoughtfully!
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    -->
+
+    <!-- Iconifier might be helpful for generating favicons and touch icons: http://iconifier.net -->
+    <!-- concatenate and minify for production -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script src="vendor/jquery-1.10.0.min.js"></script>
+    <script src="js/jquery.loadicon.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/flyinText.js"></script>
+
+    <script src="vendor/angular.js"></script>
+    <script src="js/mp3Player.js"></script>
+    <script src="js/mp3Player.controllers.js"></script>
+    <script src="js/mp3Player.directives.js"></script>
+    <script src="js/mp3Player.filters.js"></script>
+    <script src="js/mp3Player.services.js"></script>
+</head>
+
+<body ng-controller="AppCtrl">
+
+<div class="wrapper">
+    <header>
+        {{title}}
+    </header>
+
+    <div class="main">
+        <div class="playaView1">
+            <div>
+                <h1>{{title}} - {{theme}} Theme</h1>
+                <div class="displayOverlay"></div>
+                <div class="display" ng-controller="DisplayCtrl">
+                    <div class="song">{{Display}}</div>
+                    <div class="album">{{Album}}</div>
+                    <div class="genre">{{Genre}}</div>
+                </div>
+                <div  ng-controller="TimeCtrl"><div class="currentTime">{{currTime}}</div><div class="slider time"  data-min="0" data-max="1" data-value="0" ng-click="setTime()"></div><div class="timeLeft">{{timeLeft}}</div></div>
+                <div class="clear"></div>
+                <div class="buttons" ng-controller="ButtonCtrl">
+                    <button class="prev" ng-click="prev()" ng-class="{pressed:buttons.prev}"><div>&#x25B6;&#x25B6;</div></button>
+                    <button class="play" ng-click="play()" ng-class="{pressed:buttons.play}"><div>&#x25B6;</div></button>
+                    <button class="pause" ng-click="pause()" ng-class="{pressed:buttons.pause}"><div>&#x275A;&#x275A;</div></button>
+                    <button class="stop" ng-click="stop()" ng-class="{pressed:buttons.stop}"><div>&#x2B1B;</div></button>
+                    <button class="next" ng-click="next()" ng-class="{pressed:buttons.next}"><div>&#x25B6;&#x25B6;</div></button>
+                    <div class="clear"></div>
+                </div>
+                <div class="volumetext">Volume:</div>
+                <div class="slidercontainer" ng-controller="VolumeCtrl">
+                    <div class="slider volume" data-min="0" data-max="1" data-value="0.5"></div>
+                </div>
+                <div class="clear"></div>
+                <div class="tracks">
+                    <ul class="tracklist">
+                        <li ng-repeat="track in tracks" data-id="{{track.id}}" ng-class="{selected:track.id==trackCurrent}">
+                            {{track.artist}} - {{track.title | titleLength}}
+                            <load-icon></load-icon>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><small>Michael Poschacher, Fachhochschule Salzburg, MMT-B2011</small></p>
+    </footer>
+
+</div>
+</body>
+</html>
